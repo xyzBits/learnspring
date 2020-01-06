@@ -3,7 +3,6 @@ package com.dongfang.spring.ioc;
 import com.dongfang.spring.ioc.bean.Person;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class HelloIoc {
