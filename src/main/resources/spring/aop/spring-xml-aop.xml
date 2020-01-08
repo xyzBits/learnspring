@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+    1	概述
+除了使用AspectJ注解声明切面，Spring也支持在bean配置文件中声明切面。这种声明是通过aop名称空间中的XML元素完成的。
+正常情况下，基于注解的声明要优先于基于XML的声明。通过AspectJ注解，切面可以与AspectJ兼容，而基于XML的配置则是Spring专有的。由于AspectJ得到越来越多的 AOP框架支持，所以以注解风格编写的切面将会有更多重用的机会。
+2	配置细节
+在bean配置文件中，所有的Spring AOP配置都必须定义在<aop:config>元素内部。对于每个切面而言，都要创建一个<aop:aspect>元素来为具体的切面实现引用后端bean实例。
+切面bean必须有一个标识符，供<aop:aspect>元素引用。
+
+3	声明切入点
+	切入点使用<aop:pointcut>元素声明。
+	切入点必须定义在<aop:aspect>元素下，或者直接定义在<aop:config>元素下。
+	定义在<aop:aspect>元素下：只对当前切面有效
+	定义在<aop:config>元素下：对所有切面都有效
+	基于XML的AOP配置不允许在切入点表达式中用名称引用其他切入点。
+
+4	声明通知
+	在aop名称空间中，每种通知类型都对应一个特定的XML元素。
+	通知元素需要使用<pointcut-ref>来引用切入点，或用<pointcut>直接嵌入切入点表达式。
+	method属性指定切面类中通知方法的名称
+
+    -->
+
+
+    <bean id="myCalculator" class="com.dongfang.spring.aop.bean.MyCalculatorImpl"/>
+    <bean id="xmlLoggerAspect" class="com.dongfang.spring.aop.aspect.XmlLoggerAspect"/>
+
+    <aop:config>
+        <aop:pointcut id="globalPointcut" expression="execution(public * com.dongfang.spring.aop.bean.*.*(..))"/>
+        <aop:aspect id="" ref="xmlLoggerAspect">
+            <aop:before method="before" pointcut-ref="globalPointcut"/>
+            <aop:after method="after" pointcut-ref="globalPointcut"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="globalPointcut" returning="result"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="globalPointcut" throwing="ex"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

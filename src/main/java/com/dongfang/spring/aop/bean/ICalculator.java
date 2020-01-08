@@ -1,4 +1,4 @@
-package com.dongfang.spring.aop;
+package com.dongfang.spring.aop.bean;
 
 public interface ICalculator {
     int add(int i, int j);
