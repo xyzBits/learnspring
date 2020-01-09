@@ -4,5 +4,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/aop/transaction/spring-jdbc-template.xml</param-value>
+    </context-param>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <servlet>
+        <servlet-name>FirstServlet</servlet-name>
+        <servlet-class>com.dongfang.spring.mvc.FirstServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FirstServlet</servlet-name>
+        <url-pattern>/firstServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
