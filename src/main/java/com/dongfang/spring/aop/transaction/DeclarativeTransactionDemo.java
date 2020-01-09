@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.FileNotFoundException;
+
 
 /**
  * 事务：
@@ -56,14 +58,41 @@ public class DeclarativeTransactionDemo {
 
 
     @Test
-    public void testEnvironment() {
+    public void testEnvironment() throws FileNotFoundException {
         BookService bookService = iocContainer.getBean(BookService.class);
         bookService.checkout("Tom", "ISBN-001");
     }
 
     @Test
-    public void testTransactional() {
+    public void testTransactional() throws FileNotFoundException {
         BookService bookService = iocContainer.getBean(BookService.class);
         bookService.checkout("Tom", "ISBN-001");
+    }
+
+    /**
+     * isolation = Isolation.READ_UNCOMMITTED
+     * start transaction;
+     * update book set price = 998 where isbn = 'ISBN-001';
+     * price = 998
+     * 隔离级别为读未提交，
+     *
+     * isolation = Isolation.READ_COMMITTED
+     * 隔离级别改成读已提交，price = 100
+     */
+    @Test
+    public void testIsolationReadUnCommit() {
+        BookService bookService = iocContainer.getBean(BookService.class);
+        int price = bookService.getPrice("ISBN-001");
+        System.out.println("price = " + price);
+        // cglib生成的代理对象执行真正的方法，有事务的业务逻辑，容器中保存的是代理对象
+        // bookService.getClass() = class com.dongfang.spring.aop.transaction.BookService$$EnhancerBySpringCGLIB$$26cf3cb1
+        System.out.println("bookService.getClass() = " + bookService.getClass());
+    }
+
+    @Test
+    public void testPropagation() throws FileNotFoundException {
+        MultiService multiService = iocContainer.getBean(MultiService.class);
+        multiService.multiTransaction();
+
     }
 }

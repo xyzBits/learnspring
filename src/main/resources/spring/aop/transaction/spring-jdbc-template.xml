@@ -30,8 +30,9 @@
     </bean>
 
     <!--事务控制
+        0、配置数据源（引入数据库配置文件）
         1、控制事务管理器，让其进行事务控制，要导入AOP的包
-        2、开户基于注解的事务控制，依赖tx名称空间
+        2、开启基于注解的事务控制，依赖tx名称空间
         3、给事务方法加注解
     -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

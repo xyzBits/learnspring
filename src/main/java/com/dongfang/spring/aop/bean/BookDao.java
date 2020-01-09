@@ -21,7 +21,7 @@ public class BookDao {
      * sql语句写错，这个方法执行出错，在它前面的方法执行成功了
      */
     public void updateBalance(String userName, int price) {
-        String sql = "update ## account set balance = balance - ? where username = ?";
+        String sql = "update account set balance = balance - ? where username = ?";
         jdbcTemplate.update(sql, price, userName);
     }
 
@@ -40,5 +40,15 @@ public class BookDao {
     public void updateStock(String isbn) {
         String sql = "update book_stock set stock = stock - 1 where isbn = ?";
         jdbcTemplate.update(sql, isbn);
+    }
+
+    /**
+     * 修改图书价格
+     * @param isbn
+     * @param price
+     */
+    public void updateBookPrice(String isbn, int price) {
+        String sql = "update book set price = ? where isbn = ?";
+        jdbcTemplate.update(sql, price, isbn);
     }
 }
