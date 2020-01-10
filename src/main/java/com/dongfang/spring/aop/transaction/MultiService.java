@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.FileNotFoundException;
 import java.util.function.BinaryOperator;
 
-@Service
+//@Service
 public class MultiService {
     @Autowired
     private BookService bookService;

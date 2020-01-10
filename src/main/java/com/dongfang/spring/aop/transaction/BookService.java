@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
-@Service
+//@Service
 public class BookService {
     @Autowired
     private BookDao bookDao;

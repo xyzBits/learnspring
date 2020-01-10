@@ -1,6 +1,5 @@
 package com.dongfang.spring.aop.bean;
 
-import org.hamcrest.core.Is;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

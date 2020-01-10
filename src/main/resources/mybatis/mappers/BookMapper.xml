@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dongfang.spring.aop.transaction.dao.BookMapper">
+    <update id="updateBalanceByUserNameAndBookPrice">
+        update account
+        set balance = balance - #{price}
+        where username = #{userName}
+    </update>
+
+    <update id="updateBookStockByIsbn">
+        update book_stock
+        set stock = stock - 1
+        where isbn = #{isbn}
+    </update>
+
+    <update id="updateBookPriceByIsbn">
+        update book
+        set price = #{price}
+        where isbn = #{isbn}
+    </update>
+
+    <select id="getBookPriceByIsbn" resultType="java.lang.Integer">
+        select price
+        from book
+        where isbn = #{isbn}
+    </select>
+</mapper>
