@@ -3,22 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <!--
+        Spring MVC思想是有一个前端控制器拦截所有请求，并智能转发
+            前端控制器是一个servlet，应该在web.xml中配置这个servlet来拦截所有请求
+    -->
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/aop/transaction/spring-jdbc-template.xml</param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    
     <servlet>
-        <servlet-name>FirstServlet</servlet-name>
-        <servlet-class>com.dongfang.spring.mvc.FirstServlet</servlet-class>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <!--指定Spring MVC配文件位置-->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/mvc/spring-mvc.xml</param-value>
+        </init-param>
+        <!--服务器启动的时候，创建对象，值越小，优先级越高-->
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>FirstServlet</servlet-name>
-        <url-pattern>/firstServlet</url-pattern>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <!--/ /*都是拦截所有请求，/*还会拦截*.jsp这些请求，拦截了页面无法显示， /能放行jsp-->
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
