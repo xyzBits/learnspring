@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,9 +47,14 @@ import java.util.Map;
  *
  *      RequestParam
  *      可以直接在方法参数上写原生API，有HttpServlet HttpServletResponse HttpSession Principal Locale InputStream OutputStream Reader Writer
+ *
+ *      SessionAttributes 标在类上 Map中保存数据时，如果有key=msg的，在session中也保存一下
+ *      types = String.class 只要是String类型的，就保存在session中
+ *      可能会引发异常，还是使用原生API
  */
 @Controller
 @RequestMapping(path = "/rest")
+@SessionAttributes(value = "msg", types = {String.class})
 public class RestController {
 
     // world 404
@@ -109,16 +116,21 @@ public class RestController {
      * map.getClass() = class org.springframework.validation.support.BindingAwareModelMap
      * model.getClass() = class org.springframework.validation.support.BindingAwareModelMap
      * modelMap.getClass() = class org.springframework.validation.support.BindingAwareModelMap
+     *
+     * 方法的返回值变为ModelAndView类型，
+     *      其中既包含页面信息（页面地址），也包含模型数据（带给页面的数据），而且数据放在请求域中
      * */
     @RequestMapping(path = "/output")
-    public String outputToPage(Map<String, Object> map,
-                                            Model model,
-                                            ModelMap modelMap) {
-        map.put("name", "Dong fang");
+    public ModelAndView outputToPage(Map<String, Object> map,
+                               Model model,
+                               ModelMap modelMap) {
+        map.put("msg", "Dong fang");
         System.out.println("map.getClass() = " + map.getClass());
         System.out.println("model.getClass() = " + model.getClass());
         System.out.println("modelMap.getClass() = " + modelMap.getClass());
-        return "success";
+        ModelAndView modelAndView = new ModelAndView("success");
+
+        return modelAndView;
     }
 
 }
