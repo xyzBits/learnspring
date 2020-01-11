@@ -4,6 +4,8 @@ import com.dongfang.spring.mvc.bean.Book;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * 运行流程
@@ -101,10 +104,21 @@ public class RestController {
         return "success";
     }
 
-    @Test
-    public void test() {
-        Book book = new Book();
-        System.out.println(book);
+
+    /**
+     * map.getClass() = class org.springframework.validation.support.BindingAwareModelMap
+     * model.getClass() = class org.springframework.validation.support.BindingAwareModelMap
+     * modelMap.getClass() = class org.springframework.validation.support.BindingAwareModelMap
+     * */
+    @RequestMapping(path = "/output")
+    public String outputToPage(Map<String, Object> map,
+                                            Model model,
+                                            ModelMap modelMap) {
+        map.put("name", "Dong fang");
+        System.out.println("map.getClass() = " + map.getClass());
+        System.out.println("model.getClass() = " + model.getClass());
+        System.out.println("modelMap.getClass() = " + modelMap.getClass());
+        return "success";
     }
 
 }
