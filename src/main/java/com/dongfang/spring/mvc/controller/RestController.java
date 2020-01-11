@@ -133,4 +133,21 @@ public class RestController {
         return modelAndView;
     }
 
+    /**
+     * 有转发和重定向的操作，视图解析器不起作用了
+     * forward:转发到静态页面或者其他controller
+     * forward前缀不会由我们配置的视图解析器拼串
+     *
+     * redirect:重定向的路径，浏览器会再发一次请求，返回302
+     *          /hello.jsp代表的就是从当前项目下开始，SpringMVC会为路径自动拼接上项目名
+     *          原生的servlet重定向/路径需要加上项目名才能成功
+     *          response.sendRedirect("/hello.jsp")
+    * */
+    @RequestMapping(path = "/parseView", method = RequestMethod.GET)
+    public String parseView() {
+//        return "forward:/demo/index.jsp";
+//        return "forward:/rest/book/1";
+        return "redirect:/rest/book/1";
+    }
+
 }
