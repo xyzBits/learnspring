@@ -1,6 +1,6 @@
-package com.dongfang.spring.mvc.dao;
+package com.dongfang.spring.ssm.dao;
 
-import com.dongfang.spring.mvc.bean.Employee;
+import com.dongfang.spring.ssm.bean.Employee;
 
 import java.util.List;
 

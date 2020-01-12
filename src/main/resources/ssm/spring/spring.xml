@@ -40,7 +40,7 @@
     <!--将dao接口注册到容器中-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定dao接口所在的包-->
-        <property name="basePackage" value="com.dongfang.spring.mvc.dao"/>
+        <property name="basePackage" value="com.dongfang.spring.ssm.dao"/>
     </bean>
-<!--    <mybatis-spring:scan base-package="com.dongfang.spring.mvc.dao"/>-->
+<!--    <mybatis-spring:scan base-package="com.dongfang.spring.ssm.dao"/>-->
 </beans>

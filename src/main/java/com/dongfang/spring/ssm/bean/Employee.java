@@ -1,4 +1,4 @@
-package com.dongfang.spring.mvc.bean;
+package com.dongfang.spring.ssm.bean;
 
 public class Employee {
     private Integer empId;
