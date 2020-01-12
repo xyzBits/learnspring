@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <context:component-scan base-package="com.dongfang.spring.mvc">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <context:property-placeholder location="classpath:ssm/dbconfig.properties"/>
+
+    <!--Spring用来控制业务逻辑，数据源，事务控制，aop-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+        <property name="minPoolSize" value="${jdbc.minPoolSize}"/>
+    </bean>
+
+    <!--Spring事务管理器-->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--开启基于注解的事务-->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--configLocation指定全局配置文件的位置-->
+        <property name="configLocation" value="classpath:ssm/mybatis/mybatis-config.xml"/>
+        <!--mapperLocations 指定mapper文件的位置-->
+        <property name="mapperLocations" value="classpath:ssm/mybatis/mappers/*.xml"/>
+    </bean>
+
+    <!--将dao接口注册到容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定dao接口所在的包-->
+        <property name="basePackage" value="com.dongfang.spring.mvc.dao"/>
+    </bean>
+<!--    <mybatis-spring:scan base-package="com.dongfang.spring.mvc.dao"/>-->
+</beans>
