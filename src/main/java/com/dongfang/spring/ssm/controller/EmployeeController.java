@@ -5,6 +5,7 @@ import com.dongfang.spring.ssm.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,5 +23,12 @@ public class EmployeeController {
     @ResponseBody
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
+    }
+
+    @RequestMapping(path = "/employees", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void updateEmployees(@RequestBody List<Employee> employees) {
+        employees.forEach(System.out::println);
+        employeeService.updateEmployees(employees);
     }
 }

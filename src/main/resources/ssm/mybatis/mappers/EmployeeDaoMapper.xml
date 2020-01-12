@@ -8,9 +8,56 @@
         <id column="emp_id" property="empId"/>
         <result column="emp_name" property="empName"/>
         <result column="salary" property="salary"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <result column="birth" property="birth"/>
     </resultMap>
+
     <select id="getAllEmployees" resultMap="employee">
         select *
         from employee
     </select>
+
+
+    <!--批量更新 -->
+    <update id="updateEmployees" parameterType="java.util.List">
+        <foreach close=";" collection="employees" index="index" item="employee" open="" separator=";">
+            update employee
+            <trim prefix="set" suffixOverrides=",">
+                <if test="employee.empName != null">emp_name = #{employee.empName},</if>
+                <if test="employee.email != null">email = #{employee.email},</if>
+                <if test="employee.gender != null">gender = #{employee.gender},</if>
+                <if test="employee.birth != null">birth = #{employee.birth},</if>
+                <if test="employee.salary != null">salary = #{employee.salary}, </if>
+            </trim>
+            <where> emp_id = #{employee.empId}</where>
+        </foreach>
+    </update>
+
+    <!--
+      <update id="updateEmployees">
+            <foreach collection="employees" item="employee" index="index" open="" close="" separator=";">
+                <trim prefix="set" suffixOverrides=",">
+                    <if test="employee.empName != null and employee.empName != ''">
+                        emp_name = #{employee.empName},
+                    </if>
+                    <if test="employee.email != null and employee.email != ''">
+                        email = #{employee.email},
+                    </if>
+                    <if test="employee.gender != null and employee.gender != ''">
+                        gender = #{employee.gender}
+                    </if>
+                    <if test="employee.gender != null">
+                        gender = #{employee.gender}
+                    </if>
+                    <if test="employee.birth != null">
+                        birth = #{employee.birth}
+                    </if>
+                </trim>
+                <where>
+                    emp_id = #{employee.empId}
+                </where>
+            </foreach>
+        </update>-->
+
 </mapper>

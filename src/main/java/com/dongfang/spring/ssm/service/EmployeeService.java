@@ -4,6 +4,7 @@ import com.dongfang.spring.ssm.bean.Employee;
 import com.dongfang.spring.ssm.dao.EmployeeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public class EmployeeService {
         return employeeDao.getAllEmployees();
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEmployees(List<Employee> employees) {
+        employeeDao.updateEmployees(employees);
+    }
 
 }

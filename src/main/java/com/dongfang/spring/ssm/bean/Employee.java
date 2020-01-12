@@ -1,9 +1,14 @@
 package com.dongfang.spring.ssm.bean;
 
+import java.util.Date;
+
 public class Employee {
     private Integer empId;
     private String empName;
     private Double salary;
+    private Date birth;
+    private String email;
+    private Integer gender;
 
     public Employee() {
     }
@@ -32,6 +37,30 @@ public class Employee {
         this.salary = salary;
     }
 
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -41,6 +70,12 @@ public class Employee {
                 .append(empName).append('\"');
         sb.append(",\"salary\":")
                 .append(salary);
+        sb.append(",\"birth\":\"")
+                .append(birth).append('\"');
+        sb.append(",\"email\":\"")
+                .append(email).append('\"');
+        sb.append(",\"gender\":")
+                .append(gender);
         sb.append('}');
         return sb.toString();
     }
